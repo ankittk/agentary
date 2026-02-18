@@ -1,19 +1,21 @@
-# Agentary
+<div align="center">
 
 [![CI](https://github.com/ankittk/agentary/actions/workflows/ci.yml/badge.svg)](https://github.com/ankittk/agentary/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/ankittk/agentary/graph/badge.svg)](https://codecov.io/gh/ankittk/agentary)
-[![Release](https://img.shields.io/github/v/release/ankittk/agentary)](https://github.com/ankittk/agentary/releases)
+[![Release](https://img.shields.io/github/v/release/ankittk/agentary?include_prereleases)](https://github.com/ankittk/agentary/releases)
 [![Go Reference](https://pkg.go.dev/badge/github.com/ankittk/agentary.svg)](https://pkg.go.dev/github.com/ankittk/agentary)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ankittk/agentary)](https://goreportcard.com/report/github.com/ankittk/agentary)
-[![License](https://img.shields.io/github/license/ankittk/agentary)](LICENSE)
+[![License](https://img.shields.io/github/license/ankittk/agentary)](https://github.com/ankittk/agentary/blob/main/LICENSE)
 
 ![Agentary logo](web/public/logo-animated.svg)
 
-# Agentary: Local AI team that ships
+## Agentary: Local AI team that ships
 
 ### Go 1.21+ · Linux, macOS, Windows · x86_64, ARM64 · License Apache-2.0
 
-[Documentation](#-documentation) · [Releases](https://github.com/ankittk/agentary/releases)
+[**Documentation**](https://github.com/ankittk/agentary/tree/main/docs) · [**Releases**](https://github.com/ankittk/agentary/releases)
+
+</div>
 
 **Not a copilot. A team that ships.**
 
