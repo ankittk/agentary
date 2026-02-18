@@ -8,7 +8,7 @@ dist/
 *.exe~
 *.dll
 *.so
-agentary*
+/agentary*
 *.dylib
 
 # Test binary

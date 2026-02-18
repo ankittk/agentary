@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package agentary.runtime.v1;
+
+option go_package = "github.com/ankittk/agentary/internal/agent/runtime/grpc/pb;pbruntime";
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+
+// AgentRuntime runs a single agent turn: request in, stream of events and final result.
+service AgentRuntime {
+  // RunTurn runs one agent turn. Server streams events then sends a final result.
+  rpc RunTurn(TurnRequest) returns (stream RunTurnResponse);
+}
+
+message TurnRequest {
+  string team = 1;
+  string agent = 2;
+  optional int64 task_id = 3;
+  string input = 4;
+  repeated string network_allowlist = 5;
+  string model = 6;       // e.g. claude-sonnet; optional from agent config
+  int32 max_tokens = 7;   // 0 = use default
+}
+
+message Event {
+  string type = 1;                    // e.g. turn_started, agent_activity, turn_ended
+  string team = 2;
+  string agent = 3;
+  optional int64 task_id = 4;
+  google.protobuf.Timestamp timestamp = 5;
+  google.protobuf.Struct data = 6;    // optional JSON-like payload
+}
+
+message TurnResult {
+  string output = 1;   // outcome string (e.g. done, submit_for_review, changes_requested)
+}
+
+// RunTurnResponse is a single stream message: either an event or the final result.
+message RunTurnResponse {
+  oneof msg {
+    Event event = 1;
+    TurnResult result = 2;
+  }
+}
