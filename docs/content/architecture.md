@@ -1,6 +1,7 @@
 ---
 title: "Architecture"
 weight: 2
+permalink: "/docs/architecture/"
 ---
 
 This page describes the main components of Agentary and how they interact.

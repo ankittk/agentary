@@ -1,5 +1,6 @@
 ---
 title: "Sandboxing"
+permalink: "/docs/sandboxing/"
 description: "6-layer defense and agent boundaries"
 weight: 5
 ---

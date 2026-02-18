@@ -1,5 +1,6 @@
 ---
 title: "CLI reference"
+permalink: "/docs/cli-reference/"
 description: "Commands and flags"
 weight: 4
 ---

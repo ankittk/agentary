@@ -1,5 +1,6 @@
 ---
 title: "Workflows"
+permalink: "/docs/workflows/"
 weight: 9
 ---
 

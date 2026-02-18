@@ -1,5 +1,6 @@
 ---
 title: "API reference"
+permalink: "/docs/api-reference/"
 description: "HTTP endpoints"
 weight: 3
 ---

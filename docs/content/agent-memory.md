@@ -1,5 +1,6 @@
 ---
 title: "Agent Memory"
+permalink: "/docs/agent-memory/"
 weight: 7
 ---
 

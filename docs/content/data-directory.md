@@ -1,5 +1,6 @@
 ---
 title: "Data directory"
+permalink: "/docs/data-directory/"
 description: "Home directory layout"
 weight: 6
 ---

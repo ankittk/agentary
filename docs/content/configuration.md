@@ -1,5 +1,6 @@
 ---
 title: "Configuration"
+permalink: "/docs/configuration/"
 description: "Flags, env vars, config files"
 weight: 8
 ---

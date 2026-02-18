@@ -2,6 +2,7 @@
 title: "Getting Started"
 description: "Install and run in a few minutes"
 weight: 1
+permalink: "/docs/getting-started/"
 ---
 
 ## Install

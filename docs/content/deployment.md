@@ -1,5 +1,6 @@
 ---
 title: "Deployment"
+permalink: "/docs/deployment/"
 weight: 10
 ---
 
