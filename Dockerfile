@@ -1,28 +1,13 @@
-FROM node:22-alpine AS web
-WORKDIR /web
-COPY web/package.json web/package-lock.json* ./
-RUN npm ci
-COPY web .
-RUN npm run build
-
-FROM golang:1.21 AS build
-WORKDIR /src
-COPY go.mod ./
-RUN go mod download
-COPY . .
-COPY --from=web /web/dist internal/ui/dist
-RUN go mod download && CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/agentary ./cmd/agentary
-
+# GoReleaser puts only the pre-built binary (and this Dockerfile) in the build context.
+# The binary is built with embedded UI earlier in the release; we just copy it.
 FROM gcr.io/distroless/static:nonroot
 
-COPY --from=build /out/agentary /agentary
+COPY agentary /agentary
 
 EXPOSE 3548
 
 USER nonroot:nonroot
 
 ENV AGENTARY_HOME=/data
-# Default: run web + scheduler in foreground. Override with CMD for custom home.
 ENTRYPOINT ["/agentary"]
 CMD ["start", "--foreground", "--home", "/data"]
-

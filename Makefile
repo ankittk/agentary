@@ -47,5 +47,6 @@ smoke: test lint
 fmt:
 	gofmt -w ./cmd ./internal
 
+# Build Docker image from source (uses Dockerfile.build). For release, GoReleaser uses Dockerfile + pre-built binary.
 docker-build:
-	docker build -t $(BINARY):dev .
+	docker build -f Dockerfile.build -t $(BINARY):dev .
