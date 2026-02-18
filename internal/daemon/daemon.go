@@ -13,7 +13,6 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	"syscall"
 	"time"
 
 	"github.com/ankittk/agentary/internal/httpapi"
@@ -210,7 +209,7 @@ func StartBackground(ctx context.Context, opts StartOptions) (int, error) {
 	cmd := exec.Command(exe, args...)
 	cmd.Stdout = io.Discard
 	cmd.Stderr = stderr
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
+	setDaemonSysProcAttr(cmd)
 
 	if err := cmd.Start(); err != nil {
 		return 0, err
@@ -243,7 +242,7 @@ func Stop(ctx context.Context, home string) (bool, error) {
 		// On unix FindProcess always succeeds; keep this for completeness.
 		return false, errNotRunning
 	}
-	if err := proc.Signal(syscall.SIGTERM); err != nil {
+	if err := signalTerm(proc); err != nil {
 		return false, err
 	}
 
@@ -270,8 +269,7 @@ func Status(ctx context.Context, home string) (StatusInfo, error) {
 		return StatusInfo{Running: false}, nil
 	}
 
-	// kill(pid, 0) checks existence/permission on unix.
-	if err := syscall.Kill(pid, 0); err != nil {
+	if !processExists(pid) {
 		_ = os.Remove(pidPath(home))
 		return StatusInfo{Running: false}, nil
 	}

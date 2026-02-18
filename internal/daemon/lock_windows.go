@@ -1,42 +1,38 @@
-//go:build !windows
+//go:build windows
 
 package daemon
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
-	"syscall"
 )
 
 type daemonLock struct {
-	f *os.File
+	f    *os.File
+	path string
 }
 
 func acquireLock(lockFile string) (*daemonLock, error) {
 	if err := os.MkdirAll(filepath.Dir(lockFile), 0o755); err != nil {
 		return nil, err
 	}
-	f, err := os.OpenFile(lockFile, os.O_CREATE|os.O_RDWR, 0o644)
+	// On Windows, open with exclusive create: only one process can have the file.
+	// If it already exists, we get "already running".
+	f, err := os.OpenFile(lockFile, os.O_CREATE|os.O_EXCL|os.O_RDWR, 0o644)
 	if err != nil {
-		return nil, err
-	}
-
-	if err := syscall.Flock(int(f.Fd()), syscall.LOCK_EX|syscall.LOCK_NB); err != nil {
-		_ = f.Close()
-		if errors.Is(err, syscall.EWOULDBLOCK) {
+		if os.IsExist(err) {
 			return nil, fmt.Errorf("agentary is already running (could not acquire lock)")
 		}
 		return nil, err
 	}
-	return &daemonLock{f: f}, nil
+	return &daemonLock{f: f, path: lockFile}, nil
 }
 
 func (l *daemonLock) release() {
 	if l == nil || l.f == nil {
 		return
 	}
-	_ = syscall.Flock(int(l.f.Fd()), syscall.LOCK_UN)
 	_ = l.f.Close()
+	_ = os.Remove(l.path)
 }
