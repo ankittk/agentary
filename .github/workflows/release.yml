@@ -1,5 +1,5 @@
-# Release on tag push (e.g. v1.0.0). No repository secrets required:
-# GITHUB_TOKEN is automatically provided by GitHub Actions (not a user-added secret).
+# Release on tag push (e.g. v1.0.0).
+# Add secret TOKEN (or GHCR_TOKEN): a PAT with repo + write:packages so release + Docker push work.
 name: release
 
 on:
@@ -41,6 +41,9 @@ jobs:
           curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
           syft version
 
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
@@ -48,7 +51,6 @@ jobs:
           version: latest
           args: release --clean
         env:
-          # Automatic token (do not add any secret in repo Settings)
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Public context: repo owner for Docker image name
+          # Use your PAT (TOKEN) so release upload + Docker push to ghcr.io succeed
+          GITHUB_TOKEN: ${{ secrets.GHCR_TOKEN }}
           GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
