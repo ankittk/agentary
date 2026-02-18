@@ -1,0 +1,14 @@
+<svg width="150" height="150" viewBox="0 0 150 150" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="faviconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="150" height="150" rx="30" fill="#0B1220"/>
+
+  <circle cx="45" cy="75" r="18" fill="url(#faviconGradient)"/>
+  <circle cx="75" cy="75" r="18" fill="url(#faviconGradient)"/>
+  <circle cx="105" cy="75" r="18" fill="url(#faviconGradient)"/>
+</svg>

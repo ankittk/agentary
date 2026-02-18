@@ -1,0 +1,48 @@
+# Landing page sections for Lotus Docs
+
+hero:
+  enable: true
+  weight: 10
+  template: hero
+
+  titleLogo:
+    path: "images"
+    filename: "logo.svg"
+    alt: "Agentary"
+    height: 48px
+
+  title: "Agentary"
+  subtitle: "Run agents locally with a single binary. Web dashboard, workflows, and sandboxing built in. No cloud lock-in."
+
+  ctaButton:
+    icon: rocket_launch
+    btnText: "Get Started"
+    url: "/docs/"
+  cta2Button:
+    icon: code
+    btnText: "GitHub"
+    url: "https://github.com/ankittk/agentary"
+
+  info: "**MIT** licensed. Single binary, SQLite or Postgres."
+
+featureGrid:
+  enable: true
+  weight: 20
+  template: feature grid
+  title: Why Agentary?
+  subtitle: Local-first agent orchestration with a modern stack.
+  items:
+    - title: Local first
+      icon: computer
+      description: One binary, your machine. Data stays in AGENTARY_HOME. Optional Postgres for scale.
+    - title: Web UI
+      icon: dashboard
+      description: Kanban, workflows, agent monitor, charter editor, and chat. No Node or npm required.
+    - title: Sandboxed
+      icon: security
+      description: Six-layer defense. Write-path guard, bubblewrap, and daemon-controlled git operations.
+
+imageCompare:
+  enable: false
+  weight: 30
+  template: image compare

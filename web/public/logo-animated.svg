@@ -1,0 +1,23 @@
+<svg width="520" height="140" viewBox="0 0 520 140" xmlns="http://www.w3.org/2000/svg">
+  <rect width="520" height="140" fill="#0B1220"/>
+
+  <circle cx="80" cy="70" r="22" fill="#2563EB">
+    <animate attributeName="r" values="22;26;22" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="140" cy="70" r="22" fill="#7C3AED">
+    <animate attributeName="r" values="22;26;22" dur="1.5s" begin="0.3s" repeatCount="indefinite"/>
+  </circle>
+
+  <circle cx="200" cy="70" r="22" fill="#10B981">
+    <animate attributeName="r" values="22;26;22" dur="1.5s" begin="0.6s" repeatCount="indefinite"/>
+  </circle>
+
+  <text x="250" y="85"
+        font-family="Inter, Poppins, sans-serif"
+        font-size="52"
+        font-weight="600"
+        fill="#E5E7EB">
+    Agentary
+  </text>
+</svg>

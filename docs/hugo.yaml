@@ -1,0 +1,57 @@
+# Hugo config for Agentary documentation site.
+# Run: cd docs && hugo server
+baseURL: https://agentary.dev/
+title: Agentary Docs
+languageCode: en-us
+contentDir: content
+enableEmoji: true
+disableKinds: ["taxonomy", "term"]
+
+module:
+  imports:
+    - path: github.com/colinwilson/lotusdocs
+      disable: false
+    - path: github.com/gohugoio/hugo-mod-bootstrap-scss/v5
+      disable: false
+
+markup:
+  defaultMarkdownHandler: goldmark
+  tableOfContents:
+    startLevel: 1
+    endLevel: 3
+  goldmark:
+    renderer:
+      unsafe: true
+
+params:
+  description: "Documentation for Agentary - local agent orchestration with a web UI"
+  # Lotus Docs
+  footer:
+    copyright: "© :YEAR: Agentary. Local agent orchestration."
+  social:
+    github: "ankittk/agentary"
+  docs:
+    title: "Agentary Docs"
+    darkMode: false
+    prism: true
+    editPage: true
+    repoURL: "https://github.com/ankittk/agentary"
+    repoBranch: "main"
+    lastMod: false
+    sidebarIcons: true
+    breadcrumbs: true
+    backToTop: true
+    toc: true
+    tocMobile: true
+    scrollSpy: true
+    descriptions: true
+    navDesc: true
+  flexsearch:
+    enabled: true
+
+menu:
+  primary:
+    - name: Docs
+      url: docs/
+      identifier: docs
+      weight: 10

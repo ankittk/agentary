@@ -1,32 +1,69 @@
-# If you prefer the allow list template instead of the deny list, see community template:
-# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
-#
-# Binaries for programs and plugins
+# Dependencies
+node_modules/
+
+# Binaries and build output
+bin/
+dist/
 *.exe
 *.exe~
 *.dll
 *.so
+agentary*
 *.dylib
 
-# Test binary, built with `go test -c`
+# Test binary
 *.test
 
-# Code coverage profiles and other test artifacts
+# Coverage and test artifacts
 *.out
 coverage.*
 *.coverprofile
 profile.cov
+coverage.html
 
-# Dependency directories (remove the comment below to include it)
-# vendor/
-
-# Go workspace file
+# Go workspace
 go.work
 go.work.sum
 
-# env file
+# Environment and secrets (never commit)
 .env
+.env.*
+!.env.example
+.env.local
+.env.*.local
 
-# Editor/IDE
-# .idea/
-# .vscode/
+# Agentary runtime data (local dev)
+*.db
+*.sqlite
+protected/
+daemon.log
+*.log
+
+# Web frontend
+web/node_modules/
+web/dist/
+web/test-results/
+web/playwright-report/
+web/.tsbuildinfo
+*.tsbuildinfo
+
+# Hugo docs build output and cache
+docs/public/
+docs/resources/
+docs/.hugo_build.lock
+
+# Changelog: not maintained; GitHub Release notes are auto-generated from git commits by GoReleaser
+CHANGELOG.md
+
+# IDE and editor (optional; uncomment if you want to ignore)
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.cursor/
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,22 @@
+<svg width="520" height="140" viewBox="0 0 520 140" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="520" height="140" fill="#0B1220"/>
+
+  <circle cx="80" cy="70" r="22" fill="url(#brandGradient)"/>
+  <circle cx="140" cy="70" r="22" fill="url(#brandGradient)"/>
+  <circle cx="200" cy="70" r="22" fill="url(#brandGradient)"/>
+
+  <text x="250" y="85"
+        font-family="Inter, Poppins, sans-serif"
+        font-size="52"
+        font-weight="700"
+        fill="url(#brandGradient)">
+    Agentary
+  </text>
+</svg>

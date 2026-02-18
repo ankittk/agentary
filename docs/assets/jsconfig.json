@@ -1,0 +1,11 @@
+{
+ "compilerOptions": {
+  "baseUrl": ".",
+  "paths": {
+   "*": [
+    "../../../../go/pkg/mod/github.com/gohugoio/hugo-mod-jslibs-dist/popperjs/v2@v2.21100.20000/package/dist/cjs/*",
+    "../../../../go/pkg/mod/github.com/twbs/bootstrap@v5.3.3+incompatible/js/*"
+   ]
+  }
+ }
+}

@@ -1,0 +1,54 @@
+# Release on tag push (e.g. v1.0.0). No repository secrets required:
+# GITHUB_TOKEN is automatically provided by GitHub Actions (not a user-added secret).
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write  # create release and upload assets
+  packages: write # push Docker image to ghcr.io
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Build web UI
+        run: make build-web
+
+      - name: Install Syft (SBOM)
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+          syft version
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --clean
+        env:
+          # Automatic token (do not add any secret in repo Settings)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Public context: repo owner for Docker image name
+          GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
