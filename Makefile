@@ -1,4 +1,4 @@
-.PHONY: build test lint run run-dev release smoke docker-build fmt
+.PHONY: build build-web test stub-ui-dist lint run run-dev release smoke docker-build fmt
 
 BINARY := agentary
 VERSION ?= $(shell git describe --tags --always --dirty 2>/dev/null || echo "dev")
@@ -13,8 +13,15 @@ build-web:
 	cd web && npm ci && npm run build
 	rm -rf internal/ui/dist && cp -r web/dist internal/ui/dist
 
-test:
-	go test ./cmd/... ./internal/...
+# internal/ui has //go:embed dist/*; stub so go test ./... works without building web first.
+stub-ui-dist:
+	@mkdir -p internal/ui/dist && \
+	if [ ! -f internal/ui/dist/index.html ]; then \
+		echo '<!DOCTYPE html><html></html>' > internal/ui/dist/index.html; \
+	fi
+
+test: stub-ui-dist
+	go test ./...
 
 lint:
 	golangci-lint run

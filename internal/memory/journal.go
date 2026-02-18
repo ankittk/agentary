@@ -56,7 +56,7 @@ func formatJournalBlock(e JournalEntry) string {
 	b.WriteString("\n\n")
 	if e.TaskID > 0 {
 		b.WriteString("- **Task:** ")
-		b.WriteString(fmt.Sprintf("%d", e.TaskID))
+		fmt.Fprintf(&b, "%d", e.TaskID)
 		b.WriteString("\n")
 	}
 	if e.Outcome != "" {

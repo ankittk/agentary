@@ -31,10 +31,10 @@ func newApikeyGenerateCmd() *cobra.Command {
 			key := hex.EncodeToString(b)
 
 			out := cmd.OutOrStdout()
-			fmt.Fprintln(out, "Generated API key (save it somewhere safe):")
-			fmt.Fprintln(out)
-			fmt.Fprintln(out, "  "+key)
-			fmt.Fprintln(out)
+			_, _ = fmt.Fprintln(out, "Generated API key (save it somewhere safe):")
+			_, _ = fmt.Fprintln(out)
+			_, _ = fmt.Fprintln(out, "  "+key)
+			_, _ = fmt.Fprintln(out)
 
 			if envFile != "" {
 				line := "AGENTARY_API_KEY=" + key + "\n"
@@ -49,15 +49,15 @@ func newApikeyGenerateCmd() *cobra.Command {
 				if err := f.Close(); err != nil {
 					return err
 				}
-				fmt.Fprintf(out, "Appended AGENTARY_API_KEY to %s\n", envFile)
-				fmt.Fprintln(out, "Start the server with: agentary start --foreground --env-file "+envFile)
+				_, _ = fmt.Fprintf(out, "Appended AGENTARY_API_KEY to %s\n", envFile)
+				_, _ = fmt.Fprintln(out, "Start the server with: agentary start --foreground --env-file "+envFile)
 			} else {
-				fmt.Fprintln(out, "Use it:")
-				fmt.Fprintln(out, "  1. On the server: export AGENTARY_API_KEY="+key)
-				fmt.Fprintln(out, "     Or add to .env and run: agentary start --foreground --env-file .env")
-				fmt.Fprintln(out, "  2. In clients: send header X-API-Key: <key> or query ?api_key=<key>")
+				_, _ = fmt.Fprintln(out, "Use it:")
+				_, _ = fmt.Fprintln(out, "  1. On the server: export AGENTARY_API_KEY="+key)
+				_, _ = fmt.Fprintln(out, "     Or add to .env and run: agentary start --foreground --env-file .env")
+				_, _ = fmt.Fprintln(out, "  2. In clients: send header X-API-Key: <key> or query ?api_key=<key>")
 			}
-			fmt.Fprintln(out)
+			_, _ = fmt.Fprintln(out)
 			return nil
 		},
 	}

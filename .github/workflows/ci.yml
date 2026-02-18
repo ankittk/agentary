@@ -1,5 +1,4 @@
 name: ci
-
 on:
   push:
     branches: [main]
@@ -21,20 +20,19 @@ jobs:
           go-version-file: go.mod
           cache: true
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: npm
-          cache-dependency-path: web/package-lock.json
+      - name: Stub internal/ui/dist for go:embed
+        run: mkdir -p internal/ui/dist && echo '<!DOCTYPE html><html></html>' > internal/ui/dist/index.html
 
+      # Lint is expensive — only needed on PRs (push to main already passed PR lint)
       - name: Lint
-        uses: golangci/golangci-lint-action@v6
+        if: github.event_name == 'pull_request'
+        uses: golangci/golangci-lint-action@v9
         with:
-          version: latest
+          version: v2.10.1
           args: --timeout=5m
 
       - name: Fmt
+        if: github.event_name == 'pull_request'
         run: |
           DIRS="./internal ./pkg"
           [ -d ./cmd ] && DIRS="./cmd $DIRS"
@@ -43,11 +41,21 @@ jobs:
       - name: Test
         run: make test
 
+      # Coverage only on PRs to keep push-to-main fast
       - name: Coverage
+        if: github.event_name == 'pull_request'
         run: |
           PACKAGES="./internal/... ./pkg/..."
           [ -d ./cmd ] && PACKAGES="$PACKAGES ./cmd/..."
           go test -coverprofile=coverage.out -covermode=atomic $PACKAGES
+
+      - name: Set up Node
+        if: github.event_name == 'pull_request'
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
 
       - name: Commitlint
         if: github.event_name == 'pull_request'
@@ -61,7 +69,11 @@ jobs:
       - name: Summary
         run: |
           echo "## CI" >> $GITHUB_STEP_SUMMARY
-          echo "Lint, fmt, tests, commitlint, build completed." >> $GITHUB_STEP_SUMMARY
-          COVER=$$(go tool cover -func=coverage.out | grep total | awk '{print $$3}')
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Coverage: $${COVER}**" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            COVER=$(go tool cover -func=coverage.out | grep total | awk '{print $3}')
+            echo "Lint, fmt, tests, commitlint, build completed." >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Coverage: ${COVER}**" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Tests and build completed." >> $GITHUB_STEP_SUMMARY
+          fi

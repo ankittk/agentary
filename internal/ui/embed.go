@@ -30,7 +30,7 @@ func Handler() http.Handler {
 			http.ServeFileFS(w, r, sub, "index.html")
 			return
 		}
-		f.Close()
+		_ = f.Close()
 		fileServer.ServeHTTP(w, r)
 	})
 }

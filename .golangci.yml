@@ -1,3 +1,5 @@
+version: "2"
+
 run:
   timeout: 5m
 
@@ -10,12 +12,12 @@ linters:
     - unused
     - misspell
     - copyloopvar
-
-issues:
-  exclude-use-default: false
-  exclude-rules:
-    - path: '.*test.*\.go'
-      linters:
-        - bodyclose
-        - errcheck
+  exclusions:
+    paths:
+      - internal/ui  # skip: //go:embed dist/* needs dist from build
+    rules:
+      - path: '.*test.*\.go'
+        linters:
+          - bodyclose
+          - errcheck
 
