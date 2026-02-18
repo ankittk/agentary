@@ -7,11 +7,11 @@ RUN npm run build
 
 FROM golang:1.21 AS build
 WORKDIR /src
-COPY go.mod go.sum ./
+COPY go.mod ./
 RUN go mod download
 COPY . .
 COPY --from=web /web/dist internal/ui/dist
-RUN CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/agentary ./cmd/agentary
+RUN go mod download && CGO_ENABLED=0 go build -trimpath -ldflags "-s -w" -o /out/agentary ./cmd/agentary
 
 FROM gcr.io/distroless/static:nonroot
 
